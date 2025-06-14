@@ -13,11 +13,14 @@
   "license": "ISC",
   "author": "Shashank Sharma",
   "type": "commonjs",
-  "main": "app.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "start": "parcel index.html"
   },
   "devDependencies": {
     "parcel": "^2.15.2"
+  },
+  "dependencies": {
+    "react": "^19.1.0"
   }
 }
