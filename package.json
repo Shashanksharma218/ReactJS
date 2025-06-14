@@ -1,0 +1,23 @@
+{
+  "name": "reactjs",
+  "version": "1.0.0",
+  "description": "First react project",
+  "homepage": "https://github.com/Shashanksharma218/ReactJS#readme",
+  "bugs": {
+    "url": "https://github.com/Shashanksharma218/ReactJS/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shashanksharma218/ReactJS.git"
+  },
+  "license": "ISC",
+  "author": "Shashank Sharma",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "parcel": "^2.15.2"
+  }
+}
