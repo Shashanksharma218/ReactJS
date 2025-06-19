@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import resDataArray from "./api.json";
 
 const Header = () => (
   <div className="header">
@@ -23,40 +24,40 @@ const Header = () => (
   </div>
 );
 
-const Card = ({
-  imgSrc,
-  resName,
-  cuisine,
-  rating,
-  price,
-  eta,
-  offer,
-  promoted,
-}) => (
-  <div className="card">
-    <div className="img-wrapper">
-      <img src={imgSrc} alt={resName} />
-      {promoted && <span className="promoted">Promoted</span>}
-      {offer && <span className="offer">{offer}</span>}
-    </div>
-    <div className="card-content">
-      <div className="name-rating">
-        <h3 className="res-name">{resName}</h3>
-        <span className="rating">⭐ {rating}</span>
-      </div>
+const Card = (props) => {
+  const { resData } = props;
+  const cuisine = resData.info.cuisines.join(", ");
 
-      <p className="cuisine">{cuisine}</p>
+  return (
+    <div className="card">
+      <div className="img-wrapper">
+        <img
+          src={
+            "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/" +
+            resData.info.cloudinaryImageId
+          }
+          alt={resData.info.name}
+        />
+      </div>
+      <div className="card-content">
+        <div className="name-rating">
+          <h3 className="res-name">{resData.info.name}</h3>
+          <span className="rating">⭐ {resData.info.avgRating}</span>
+        </div>
 
-      <div className="card-details">
-        <span className="price">{price}</span>
-        <span className="eta">{eta}</span>
+
+        <div className="card-details">
+          <p className="cuisine">{cuisine}</p>
+          <span className="price">{resData.costForTwo}</span>
+          <span className="eta">{resData.info.sla.slaString}</span>
+        </div>
+      </div>
+      <div className="addButton">
+        <button>See More</button>
       </div>
     </div>
-    <div className="addButton">
-      <button>Add to Cart</button>
-    </div>
-  </div>
-);
+  );
+};
 
 const Body = () => (
   <div className="bodyContainer">
@@ -69,36 +70,9 @@ const Body = () => (
       </form>
     </div>
     <div className="cardContainer">
-      <Card
-        imgSrc="https://b.zmtcdn.com/data/pictures/8/20614928/811a1f150a0c57f670920151098b5589_o2_featured_v2.jpg"
-        resName="Apni Rasoi"
-        cuisine="North Indian, Chinese, Fast Food"
-        rating="4.1"
-        price="₹150 for one"
-        eta="31 min"
-        offer="₹125 OFF"
-        promoted={true}
-      />
-      <Card
-        imgSrc="https://b.zmtcdn.com/data/pictures/8/310448/cc8f83eb4e1cb9421c88bfb16fb7a82e_o2_featured_v2.jpg"
-        resName="Burger King"
-        cuisine="Burger, Fast Food, Dessert..."
-        rating="4.5"
-        price="₹200 for one"
-        eta="38 min"
-        offer="₹25 OFF"
-        promoted={true}
-      />
-      <Card
-        imgSrc="https://b.zmtcdn.com/data/pictures/8/20424478/51e2e8230a40752b7018f7367fa13dfa_o2_featured_v2.jpg"
-        resName="Domino's"
-        cuisine="Pizza, Beverages, Desserts"
-        rating="4.3"
-        price="₹150 for one"
-        eta="25 min"
-        offer="50% OFF"
-        promoted={false}
-      />
+      {resDataArray.map((resObj) => (
+        <Card resData={resObj} key = {resObj.info.id}/>
+      ))}
     </div>
   </div>
 );

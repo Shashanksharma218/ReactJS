@@ -528,7 +528,8 @@ body::before {
 .cuisine {
   font-size: 14px;
   color: #718096;
-  margin: 8px 0 12px 0;
+  margin: 8px 0 0 0;
+  width: 50%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -542,7 +543,7 @@ body::before {
   align-items: center;
   font-size: 14px;
   color: #4a5568;
-  margin-bottom: 16px;
+  /* margin-bottom: 16px; */
   font-weight: 600;
 }
 
