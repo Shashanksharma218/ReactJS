@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import resDataArray from "./api.json";
+import resDataArray from "../api.json";
 
 const Header = () => (
   <div className="header">
@@ -83,5 +83,7 @@ const Main = () => (
     <Body />
   </div>
 );
+
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(<Main />);
