@@ -1,5 +1,8 @@
+import { useState } from "react";
 import { LOGO_URL } from "../utils/constants";
-const Header = () => (
+const Header = () => {
+  const [loginButton, setLoginButton] = useState("Login");
+  return (
   <div className="header">
     <div className="logoContainer">
       <img className="logo" src={LOGO_URL} />
@@ -8,6 +11,7 @@ const Header = () => (
       </div>
     </div>
     <div className="navBar">
+      <button className="loginBtn" onClick={()=>{loginButton==="Login"?setLoginButton("Logout"):setLoginButton("Login")}}>{loginButton}</button>
       <ul className="navList">
         <li>Home</li>
         <li>About</li>
@@ -16,6 +20,6 @@ const Header = () => (
       </ul>
     </div>
   </div>
-);
+)};
 
 export default Header;

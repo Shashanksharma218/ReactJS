@@ -1,11 +1,13 @@
 // import resDataArray from "../utils/resDataArray";
 import Card from "./Card";
 import { useEffect, useState } from "react";
-import SkeletonCard from "./SkeletonCard"
+import SkeletonCard from "./SkeletonCard";
 
 const Body = () => {
   const [resData, setResData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);  
+  const [isLoading, setIsLoading] = useState(true);
+  const [searchText, setSearchText] = useState("");
+  const [filteredData, setFilteredData] = useState([]);
 
   async function fetchData() {
     try {
@@ -18,6 +20,7 @@ const Body = () => {
         data?.data?.cards?.[1]?.groupedCard?.cardGroupMap?.RESTAURANT?.cards;
       console.log(restaurants);
       setResData(restaurants || []);
+      setFilteredData(restaurants || []);
     } catch (error) {
       console.error("Error fetching data:", error);
       setResData([]);
@@ -29,30 +32,68 @@ const Body = () => {
   useEffect(() => {
     fetchData();
   }, []);
-  
+
+  useEffect(() => {
+    const filtered = resData.filter((res) =>
+      res.card.card.info.name.toLowerCase().includes(searchText.toLowerCase())
+    );
+    setFilteredData(filtered);
+  }, [searchText, resData]);
+
   return (
     <div className="bodyContainer">
       <div className="searchBar">
-        <form>
-          <button
-            type="button"
-            className="searchButton"
-            onClick={() => {
-              setResData(
-                resData.filter((res) => res.card.card.info.avgRating > 4.3)
-              );
-            }}
-          >
-            <span>Top Rated Restaurants</span>
-          </button>
-        </form>
+        <input
+          type="text"
+          className="inputBox"
+          placeholder="Type Restaurant Name"
+          value={searchText}
+          onChange={(e) => {
+            setSearchText(e.target.value);
+          }}
+        ></input>
+
+        <button
+          className="searchBtn"
+          onClick={() =>
+            setFilteredData(
+              resData.filter((res) =>
+                res.card.card.info.name
+                  .toLowerCase()
+                  .includes(searchText.toLowerCase())
+              )
+            )
+          }
+        >
+          Search
+        </button>
+
+        <button
+          className="topResBtn"
+          onClick={() => {
+            const topData = resData.filter(
+              (res) => res.card.card.info.avgRating > 4.4
+            );
+            setFilteredData(topData);
+          }}
+        >
+          <span>⭐ Top Rated Restaurants</span>
+        </button>
       </div>
       <div className="cardContainer">
-        {isLoading
-          ? Array(16).fill(null).map((_, i) => <SkeletonCard key={i} />) // 👈 show 8 skeletons
-          : resData.map((resObj) => (
-              <Card resData={resObj.card.card} key={resObj.card.card.info.id} />
-            ))}
+        {isLoading ? (
+          Array(16)
+            .fill(null)
+            .map((_, i) => <SkeletonCard key={i} />) // 👈 show 8 skeletons
+        ) : filteredData.length === 0 ? (
+          <div className="noResults">
+            No restaurant name matches your search.
+          </div>
+        ) : (
+          filteredData.map((resObj) => (
+            <Card resData={resObj.card.card} key={resObj.card.card.info.id} />
+          ))
+        )}
       </div>
     </div>
   );
