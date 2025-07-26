@@ -1,4 +1,4 @@
-[
+let resDataArray = [
   {
     "info": {
       "id": "254126",
@@ -1700,3 +1700,5 @@
     }
   }
 ]
+
+export default resDataArray;
