@@ -2,7 +2,7 @@
 import Card from "./Card";
 import { useEffect, useState } from "react";
 import SkeletonCard from "./SkeletonCard";
-
+import withPromotedLabel from "./withPromotedLabel";
 const Body = () => {
   const [resData, setResData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -39,6 +39,9 @@ const Body = () => {
     );
     setFilteredData(filtered);
   }, [searchText, resData]);
+
+  const PromotedCard = withPromotedLabel(Card);
+
 
   return (
     <div className="bodyContainer">
@@ -91,7 +94,9 @@ const Body = () => {
           </div>
         ) : (
           filteredData.map((resObj) => (
-            <Card resData={resObj.card.card} key={resObj.card.card.info.id} />
+              resObj.card.card.info.promoted?
+              <PromotedCard resData={resObj.card.card} key={resObj.card.card.info.id} />: 
+              <Card resData={resObj.card.card} key={resObj.card.card.info.id} />
           ))
         )}
       </div>

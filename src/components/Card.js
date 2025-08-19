@@ -1,5 +1,5 @@
 import { IMG_URL } from "../utils/constants";
-
+import { Link } from "react-router-dom";
 const Card = (props) => {
   const { resData } = props;
   const cuisine = resData.info.cuisines.join(", ");
@@ -24,10 +24,11 @@ const Card = (props) => {
         </div>
       </div>
       <div className="addButton">
-        <button>See More</button>
+        <Link to={`/restaurants/${resData.info.id}`} style={{ textDecoration: "none", color: "inherit" }} className="buttonLink">View Restaurant</Link>
       </div>
     </div>
   );
 };
+
 
 export default Card;
